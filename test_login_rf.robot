@@ -20,6 +20,7 @@ ${PLAYER SURNAME FIELD}         xpath=//input[@name='surname']
 ${PLAYER AGE FIELD}             xpath=//input[@name='age']
 ${PLAYER MAIN POSITION FIELD}   xpath=//input[@name='mainPosition']
 ${PROGRESS BAR TOASTER}         xpath=//*[@role='alert']
+${PLAYERSBUTTON}        xpath=//button[@type="players"]
 
 *** Test Cases ***
 Login to the system
@@ -62,6 +63,15 @@ Add new player
     Assert edit player page
     [Teardown]    Close Browser
 
+Display Players
+    Open login page
+    Type in mail
+    Type in password
+    Click on the Sign in button
+    Assert Dashboard2
+    Click on the Players button
+    Assert players page
+    [Teardown]    Close Browser
 
 *** Keywords ***
 Open login page
@@ -108,3 +118,21 @@ Assert edit player page
     Wait Until Element Is Visible    ${PROGRESS BAR TOASTER}
     Element Should Contain      ${FORM TITLE}   Edit player
     Capture Page Screenshot    screenshots/add-player/player-added.png
+Click on the Players button
+    Wait Until Element Is Visible       ${MAINPAGELINK}
+    Click Element    ${PLAYERSBUTTON}
+Assert players page
+    Wait Until Element Is Visible    ${PAGELOGO}
+    Title Should Be     Scouts panel
+    Capture Page Screenshot     screenshots/login/dashboard-start.png
+Click on the Players button
+    Wait Until Element Is Visible       ${PAGELOGO}
+    #Wait Until Element Is Visible       ${CHANGELANGUAGEBUTTON}
+    Title Should Be     Scouts panel
+    Click Element    ${PLAYERSBUTTON}
+Assert players page
+    Capture Page Screenshot     screenshots/display_players/dashboard-players.png
+Assert dashboard2
+    Wait Until Element Is Visible    ${PAGELOGO}
+    Title Should Be     Scouts panel
+    Capture Page Screenshot     screenshots/login/dashboard-start2.png
